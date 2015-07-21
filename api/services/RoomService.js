@@ -7,29 +7,27 @@
   *  
   */
 
+var uuid = require('uuid');
 // 记录当前保存的房间,这里只是简单地保存到内存
 var rooms = {};
 
 /**
  * 创建新房间
- * @param roomID
  * @param roomName
  * @param userSid
  * @param username
  * @returns {boolean}
  */
-function createRoom(roomID, roomName, userSid, username) {
-  if (rooms[roomID]) {
-    return false;
-  }
-
-  rooms[roomID] = {
+function createRoom(roomName, userSid, username) {
+  var roomID = uuid.v4();
+  var room = {
     owner: userSid,
     ownerName: username,
     name: roomName,
     users: {}
   };
-  return true;
+  rooms[roomID] = room;
+  return room;
 }
 
 /**
@@ -41,11 +39,12 @@ function createRoom(roomID, roomName, userSid, username) {
 function joinRoom(roomID, userSID, username) {
   var room = rooms[roomID];
 
-  if (room && !room.users[userSID]) {
-    room.users[userSID] = username;
-    return true;
+  if (!room) {
+    throw new Error('this room is shit');
   }
-  return false;
+
+  room.users[userSID] = username;
+  return room;
 }
 
 /**
@@ -56,6 +55,7 @@ function joinRoom(roomID, userSID, username) {
  */
 function leaveRoom(roomID, userSID) {
   var room = rooms[roomID];
+
   if (room) {
     delete room[userSID];
     return true;
