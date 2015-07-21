@@ -1,6 +1,7 @@
 var express = require('express');
 var session = require('express-session');
 var path = require('path');
+var cookieParser = require('cookie-parser');
 var createSocket = require('./api/services/SocketService').create;
 var router = require('./config/router.js');
 var app = express();
@@ -10,12 +11,13 @@ app.use(session({
   name: 'chatapp.sid',
   secret: 'JHD=JF@%$WHATEVER',
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: { maxAge: 5 * 60 * 1000 }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.use(cookieParser());
 app.use('/', router);
 
 createSocket(server);
