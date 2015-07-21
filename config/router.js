@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var UserController = require('../api/controllers/UserController');
+var RoomController = require('../api/controllers/RoomController');
 
 // index
 router.get('/', function (req, res) {
