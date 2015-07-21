@@ -16,7 +16,7 @@ var rooms = {};
  * @param roomName
  * @param userSid
  * @param username
- * @returns {boolean}
+ * @returns {object}
  */
 function createRoom(roomName, userSid, username) {
   var roomID = uuid.v4();
@@ -27,6 +27,9 @@ function createRoom(roomName, userSid, username) {
     users: {}
   };
   rooms[roomID] = room;
+
+  console.log('a new room is created: ');
+  console.log(room);
   return room;
 }
 
@@ -44,6 +47,7 @@ function joinRoom(roomID, userSID, username) {
   }
 
   room.users[userSID] = username;
+  console.log(username + ' join to room:' + room.name);
   return room;
 }
 
@@ -55,9 +59,11 @@ function joinRoom(roomID, userSID, username) {
  */
 function leaveRoom(roomID, userSID) {
   var room = rooms[roomID];
+  var username = room[userSID];
 
   if (room) {
     delete room[userSID];
+    console.log(username + ' leave from room:' + room.name);
     return true;
   }
   return false;
