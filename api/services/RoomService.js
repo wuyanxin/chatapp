@@ -21,6 +21,7 @@ var rooms = {};
 function createRoom(roomName, userSid, username) {
   var roomID = uuid.v4();
   var room = {
+    id: roomID,
     owner: userSid,
     ownerName: username,
     name: roomName,
