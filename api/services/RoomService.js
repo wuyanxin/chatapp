@@ -47,7 +47,9 @@ function joinRoom(roomID, userSID, username) {
     throw new Error('this room is shit');
   }
 
+  // 第一次记录或者
   room.users[userSID] = username;
+
   console.log(username + ' join to room:' + room.name);
   return room;
 }

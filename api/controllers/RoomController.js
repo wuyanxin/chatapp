@@ -20,8 +20,8 @@ function create(req, res) {
   var username = req.session.nickname;
 
   var room = RoomService.createRoom(roomName, userSID, username);
-  //res.render('/room', {room: room});
-  res.send({room: room});
+  res.render('newRoom', room);
+  //res.send({room: room});
 }
 
 /**
@@ -36,8 +36,8 @@ function join(req, res) {
 
   try {
     var room = RoomService.joinRoom(roomID, userSID, username);
-    //res.render('/room', {room: room});
-    res.send({room: room});
+    res.render('room', room);
+    //res.send({room: room});
   } catch (e) {
     res.send(e.message);
   }
