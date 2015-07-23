@@ -10,7 +10,12 @@ function create(server) {
   var socketIO = IO(server);
 
   socketIO.on('connection', function (socket) {
+    var url = socket.request.headers.referer;
+    var splited = url.split('/');
+    var roomID = splited[splited.length - 1];
     console.log('a user connected');
+
+    socket.join(roomID);    // 加入房间
   });
 
   return socketIO;
@@ -25,6 +30,10 @@ function getIO() {
     throw new Error('socket.io is not inited');
   }
   return socketIO;
+}
+
+function say() {
+
 }
 
 module.exports = {
