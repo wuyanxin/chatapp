@@ -25,7 +25,8 @@ function createRoom(roomName, userSid, username) {
     owner: userSid,
     ownerName: username,
     name: roomName,
-    users: {}
+    users: {},
+    count: 0
   };
   rooms[roomID] = room;
 
@@ -47,9 +48,13 @@ function joinRoom(roomID, userSID, username) {
     throw new Error('this room is shit');
   }
 
-  // 第一次记录或者
+  if (!room.users[userSID]) {
+    room.count++;
+  }
   room.users[userSID] = username;
 
+  console.log(room);
+  console.log(room.count + '人在线');
   console.log(username + ' join to room:' + room.name);
   return room;
 }
