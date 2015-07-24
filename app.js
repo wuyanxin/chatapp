@@ -12,7 +12,7 @@ app.use(session({
   secret: 'JHD=JF@%$WHATEVER',
   resave: true,
   saveUninitialized: true,
-  cookie: { maxAge: 5 * 60 * 1000 }
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
