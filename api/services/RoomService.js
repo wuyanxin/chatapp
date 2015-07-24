@@ -47,11 +47,12 @@ function joinRoom(roomID, userSID, username) {
   if (!room) {
     throw new Error('this room is shit');
   }
-
-  if (!room.users[userSID]) {
-    room.count++;
+  if (!username) {
+    throw new Error('please set your nickname');
   }
+
   room.users[userSID] = username;
+  room.count = _userCount(room.users);
 
   console.log(room);
   console.log(room.count + '人在线');
@@ -71,10 +72,25 @@ function leaveRoom(roomID, userSID) {
 
   if (room) {
     delete room[userSID];
+    room.count = _userCount(room.users);
     console.log(username + ' leave from room:' + room.name);
     return true;
   }
   return false;
+}
+
+/**
+ * 计算房间人数
+ * @param obj
+ * @returns {number}
+ * @private
+ */
+function _userCount(obj) {
+  var size = 0, key;
+  for (key in obj) {
+    if (obj.hasOwnProperty(key)) size++;
+  }
+  return size;
 }
 
 
