@@ -6,3 +6,17 @@
  * @description
  *
  */
+
+/**
+ *
+ * @param roomID
+ * @param message
+ */
+function say(roomID, message) {
+  socketIO.to(roomID).emit('msg', message);
+}
+
+module.exports = {
+  say: say
+};
+
