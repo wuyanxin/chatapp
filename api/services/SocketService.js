@@ -18,25 +18,11 @@ function create(server) {
     socket.join(roomID);    // 加入房间
   });
 
+  global.socketIO = socketIO; // globally
+
   return socketIO;
-}
-
-/**
- * 获取socket服务器对象
- * @returns {*}
- */
-function getIO() {
-  if (!socketIO) {
-    throw new Error('socket.io is not inited');
-  }
-  return socketIO;
-}
-
-function say() {
-
 }
 
 module.exports = {
-  create: create,
-  getIO: getIO
+  create: create
 };
