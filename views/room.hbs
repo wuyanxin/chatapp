@@ -13,6 +13,10 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
+
+      socket.on('msg', function (data) {
+        console.log(JSON.stringify(data));
+      });
     </script>
 </body>
 </html>
