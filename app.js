@@ -23,5 +23,5 @@ app.use('/', router);
 createSocket(server);
 
 server.listen(9826, function () {
-  console.log('server listening port 9826');
+  console.log('server listening on port 9826');
 });
