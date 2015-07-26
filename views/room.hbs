@@ -13,6 +13,14 @@
     #messageInput {
       height: 80px;
     }
+    .message {
+      line-height: 27px;
+    }
+    .message .user {
+      padding-right: 5px;
+      padding-left: 5px;
+      color: brown;
+    }
   </style>
 </head>
 <body>
@@ -21,10 +29,12 @@
     <div id="msglog">
 
     </div>
-    <textarea name="message" id="messageInput" placeholder="按Enter发送"></textarea>
+    <textarea name="message" id="messageInput"></textarea>
+    <br/>
+    按Enter键发送
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="//cdn.bootcss.com/jquery/1.11.1-rc2/jquery.js"></script>
+    <script src="/assets/js/jquery.js"></script>
     <script>
       $(function () {
         var socket = io();
@@ -32,7 +42,7 @@
         socket.on('msg', function (msg) {
           var message = '' +
               '<div class="message">' +
-              '  <span class="user">' + msg.nickname + '</span>' +
+              '  <span class="user">' + msg.nickname + ': </span>' +
               '  <span class="msg">' + msg.message + '</span>' +
               '</div>';
           $('#msglog').append(message);
@@ -40,6 +50,7 @@
 
         $('#messageInput').keydown(function (e) {
           if (e.which === 13) {
+            e.preventDefault();
             var msg = $(this).val();
             $(this).val('');
             console.log(msg);
