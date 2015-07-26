@@ -3,19 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>{{name}}</title>
+  <style>
+    #msglog, #messageInput {
+      border: 1px solid #ccc;
+      width: 500px;
+      height: 350px;
+      overflow-y: auto;
+    }
+    #messageInput {
+      height: 80px;
+    }
+  </style>
 </head>
 <body>
-    房间:{{name}}
-    <br/>
-    <br/>
-    {{count}}人在线
+    房间名:{{name}} | 房东:{{ownerName}} | {{count}}人在线
+
+    <div id="msglog">
+
+    </div>
+    <textarea name="message" id="messageInput" placeholder="按Enter发送"></textarea>
 
     <script src="/socket.io/socket.io.js"></script>
+    <script src="//cdn.bootcss.com/jquery/1.11.1-rc2/jquery.js"></script>
     <script>
-      var socket = io();
+      $(function () {
+        var socket = io();
 
-      socket.on('msg', function (data) {
-        console.log(JSON.stringify(data));
+        socket.on('msg', function (msg) {
+          var message = '' +
+              '<div class="message">' +
+              '  <span class="user">' + msg.nickname + '</span>' +
+              '  <span class="msg">' + msg.message + '</span>' +
+              '</div>';
+          $('#msglog').append(message);
+        });
+
+        $('#messageInput').keydown(function (e) {
+          if (e.which === 13) {
+            var msg = $(this).val();
+            $(this).val('');
+            console.log(msg);
+            $.get('/chat/{{id}}/'+msg, function (res) {
+              console.log('发送成功');
+            });
+          }
+        });
       });
     </script>
 </body>
