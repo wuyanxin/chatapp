@@ -8,7 +8,8 @@
  */
 
 /**
- *
+ * 发言
+ * 根据roomID区分,利用socket.io分发到不同房间
  * @param roomID
  * @param message
  */
